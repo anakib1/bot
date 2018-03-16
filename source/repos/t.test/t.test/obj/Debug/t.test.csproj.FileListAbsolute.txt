@@ -1,0 +1,28 @@
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\t.test.exe.config
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\t.test.exe
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\t.test.pdb
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\Telegram.Bot.dll
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\bin\Debug\Telegram.Bot.xml
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.csprojResolveAssemblyReference.cache
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.Form1.resources
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.Properties.Resources.resources
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.csproj.GenerateResource.Cache
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.csproj.CoreCompileInputs.cache
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.exe
+C:\Users\Алексей\Documents\Visual Studio 2017\Projects\t.test\t.test\obj\Debug\t.test.pdb
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\t.test.exe.config
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\t.test.exe
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\t.test.pdb
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\Newtonsoft.Json.dll
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\Telegram.Bot.dll
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\Newtonsoft.Json.xml
+d:\dnl\Telegram Desktop\t.test\t.test\bin\Debug\Telegram.Bot.xml
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.csprojResolveAssemblyReference.cache
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.Properties.Resources.resources
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.csproj.GenerateResource.Cache
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.csproj.CoreCompileInputs.cache
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.exe
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.pdb
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.EnCrypt.resources
