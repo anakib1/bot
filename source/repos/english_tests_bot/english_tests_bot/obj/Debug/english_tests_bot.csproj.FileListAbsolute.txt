@@ -1,0 +1,14 @@
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\english_tests_bot.exe.config
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\english_tests_bot.exe
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\english_tests_bot.pdb
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\Newtonsoft.Json.dll
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\Telegram.Bot.dll
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\Newtonsoft.Json.xml
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\bin\Debug\Telegram.Bot.xml
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.csprojResolveAssemblyReference.cache
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.brake.resources
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.Properties.Resources.resources
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.csproj.GenerateResource.Cache
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.csproj.CoreCompileInputs.cache
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.exe
+c:\users\user\source\repos\english_tests_bot\english_tests_bot\obj\Debug\english_tests_bot.pdb
