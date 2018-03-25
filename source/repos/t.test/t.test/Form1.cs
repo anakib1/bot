@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace t.test
 {
@@ -22,6 +23,57 @@ namespace t.test
                 result.Append((char)((uint)text[c] ^ (uint)key[c ]));
 
             return result.ToString();
+        }
+    }
+    //mmc class
+    class MMC
+    {
+        Dictionary<string, int> accounts = new Dictionary<string, int>();
+
+        public void Transfer(string sender, string getter, uint sum)
+        {
+            if (accounts[sender] >= sum)
+            {
+                UpdateBalance(sender, Convert.ToInt32(-sum));
+                UpdateBalance(getter, Convert.ToInt32(sum));
+
+            }
+
+
+        }
+        public void UpdateBalance(string @account, int sum)
+        {
+            accounts[@account] += sum;
+            UpdateFile();
+        }
+        public void UpdateFile()
+        {
+            using (StreamWriter sw = new StreamWriter(@"d:\doc\cc\data.mmc"))
+            {
+
+                foreach (string account in accounts.Keys)
+                {
+                    sw.WriteLine(account + " " + accounts[account]);
+                }
+            }
+
+        }
+        public string ViewBalance(string user)
+        {
+            return accounts[user].ToString();
+        }
+        public MMC()
+        {
+            using (StreamReader sr = File.OpenText(@"d:\doc\cc\data.mmc"))
+            {
+                
+                while (!sr.EndOfStream)
+                {
+                    string t = sr.ReadLine();
+                    accounts[t.Split(' ').ToArray()[0]] = Convert.ToInt32(t.Split(' ').ToArray()[1]);
+
+                }
+            }
         }
     }
     //ban class alfa
@@ -259,6 +311,30 @@ namespace t.test
             return r;
         }
     }
+    //manvelian class
+    public class Manvelka
+    {
+        string[] frases = new string[]
+        {
+            "Твоя мать - шлюха","Я ебал твою мамку","АНУ МОЛИСЬ СВЯТОЙ МАМКЕ","я нарисую карту на пзде твоей мамке и все будут знать географию","мамке своей это скажешь",
+            "ты пишешь такие большие сообщения чтоб компенсировать свой маленький член","мамка","иди нахуй","я твоя мамка","плохая мамка плохая"
+        };
+        public string res(Telegram.Bot.Types.Message message)
+        {
+            string r;
+            Random random = new Random();
+            int ind = random.Next(0, 11);
+            if (ind == 10)
+            {
+                r = message.From.FirstName.ToString() + " " + message.From.LastName.ToString() + ", ты понимаешь, что я ебал твою мать?";
+            }
+            else
+            {
+                r = frases[ind];
+            }
+            return r;
+        }
+    }
     //math class
     public class Math_1
     {
@@ -368,9 +444,10 @@ namespace t.test
                                 await Bot.SendDocumentAsync(message.Chat.Id, f, "here it`s");
                             }*/
                             //crypt
+                            MMC bank = new MMC();
                             DateTime d = DateTime.Now;
                             if (d.Minute % 15==0)
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "vote for AA!");
+                                await Bot.SendTextMessageAsync(message.Chat.Id, "have you done your homework?");
                             if(message.Text.Contains("/encrypt"))
                             {
                                 EnCrypt crypt = new EnCrypt();
@@ -398,7 +475,130 @@ namespace t.test
                                 
                                
                             }
-                            
+                            if(message.Text.Contains("/storeinfo"))
+                            {
+                                await Bot.SendTextMessageAsync(message.Chat.Id, "1) unban 1 day - 10mmc\n2) pirozhok - 500 mmc\n3) admin rights - 5000 mmc ");
+                            }
+                            if(message.Text.Contains("/buy"))
+                            {
+                                string[] s = message.Text.Split(' ').ToArray();
+                                if(s.Length<2)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                   // await Bot.SendTextMessageAsync(message.Chat.Id, s[1], replyToMessageId: message.MessageId);
+
+                                    continue;
+                                }
+                                
+                                
+
+                                int sum = 1000000;
+                                string action=String.Empty;
+                                switch (s[1])
+                                {
+                                    case "1":
+                                        {
+                                            sum = 10;
+                                            action = "@pauchok1love please give -1 day of ban to @" + message.From.Username;
+                                            break;
+                                        }
+                                    case "2":
+                                        {
+                                            sum = 500;
+                                            action= "@pauchok1love please give pirozhok to @" + message.From.Username;
+                                            break;
+                                        }
+                                    case "3":
+                                        {
+                                            sum = 5000;
+                                            action = "@pauchok1love please give admin rights to @" + message.From.Username;
+
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                            continue;
+                                            
+
+                                        }
+                                }
+                                if(Convert.ToInt32(bank.ViewBalance("@"+message.From.Username))>=sum)
+                                {
+                                    try
+                                    {
+                                        bank.UpdateBalance("@" + message.From.Username, -sum);
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, action, replyToMessageId: message.MessageId);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                    }
+                                }
+                            }
+                            if(message.Text.Contains("/viewbalance"))
+                            {
+                                try
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id,bank.ViewBalance(message.Text.Split(' ').ToArray()[1]),replyToMessageId: message.MessageId);
+                                }
+                                catch(Exception)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                }
+                               
+                            }
+                            if(message.Text.Contains("/updatebalance"))
+                            {
+                                if(message.From.Username=="pauchok1love")
+                                {
+                                    try
+                                    {
+                                        bank.UpdateBalance(message.Text.Split(' ').ToArray()[1], Convert.ToInt32(message.Text.Split(' ').ToArray()[2]));
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "completed!", replyToMessageId: message.MessageId);
+
+                                    }
+                                    catch (Exception)
+                                    {
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "u have no rights for that",replyToMessageId: message.MessageId);
+                                }
+                            }
+                            if(message.Text.Contains("/transfer"))
+                            {
+                              
+                                    string[] s = message.Text.Split(' ').ToArray();
+                                if(s.Length<4)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                    continue;
+                                }
+
+                                if (Convert.ToInt32(s[3]) > 0&&message.From.Username==s[1].Substring(1))
+                                {
+                                    try
+                                    {
+                                        bank.Transfer(s[1], s[2], Convert.ToUInt32(s[3]));
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "completed!", replyToMessageId: message.MessageId);
+                                    }
+                                    catch(Exception)
+                                    {
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+
+                                    }
+                                }
+                                else
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "please, insert positive sum, whic you have on your balance", replyToMessageId: message.MessageId);
+
+                                }
+                            }
                             //rev
                             if(message.Text.ToLower().Contains("/realrevolution"))
                             {
@@ -539,6 +739,7 @@ namespace t.test
                                         new[]
                                         {
                                         new Telegram.Bot.Types.KeyboardButton("for paliy"),
+                                        new Telegram.Bot.Types.KeyboardButton("for Fedka"),
                                 new Telegram.Bot.Types.KeyboardButton("for normal people"),
                                 new Telegram.Bot.Types.KeyboardButton("for artuturik")
                                         },
@@ -608,6 +809,13 @@ namespace t.test
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "send me numbers", replyToMessageId: message.MessageId);
                                 answer = true;
                             }
+                            //manvelka answer
+                            if (message.Text.ToLower().Contains("manv") || message.Text.ToLower().Contains("манв")|| message.Text.ToLower().Contains("monv") || message.Text.ToLower().Contains("монв"))
+                            {
+                                Manvelka manvelka = new Manvelka();
+
+                                await Bot.SendTextMessageAsync(message.Chat.Id, manvelka.res(message), replyToMessageId: message.MessageId);
+                            }
                             //zinia answer
                             if ((message.Text.ToLower().Contains("zinia") || message.Text.ToLower().Contains("зиня"))&&!message.Text.ToLower().Contains("/zinia"))
                             {
@@ -672,6 +880,12 @@ namespace t.test
                             if (message.Text.ToLower() == "for artuturik")
                             {
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "https://yummyanime.com/catalog/item/plastikovye-vospominaniya", replyToMessageId: message.MessageId);
+
+                            }
+                            if (message.Text.ToLower() == "for fedka")
+                            {
+                                await Bot.SendTextMessageAsync(message.Chat.Id, "https://yummyanime.com/catalog/item/neveroyatnye-priklyucheniya-dzhodzho-tv-1", replyToMessageId: message.MessageId);
+
                             }
                             //anime hater
                             if ((message.Text.ToLower().Contains("anime")||message.Text.ToLower().Contains("аниме"))&&!message.Text.ToLower().Contains("/"))
@@ -771,6 +985,7 @@ namespace t.test
         private void BtnRun_Click(object sender, EventArgs e)
         {
             var text = @txtKey.Text;
+            txtKey.Text = "running..";
             if (text != "" && this.bw.IsBusy != true)
             {
                 this.bw.RunWorkerAsync(text);

@@ -26,3 +26,4 @@ d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.csproj.CoreCompileInputs.
 d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.exe
 d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.pdb
 d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.EnCrypt.resources
+d:\dnl\Telegram Desktop\t.test\t.test\obj\Debug\t.test.csproj.CopyComplete
