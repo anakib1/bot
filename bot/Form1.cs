@@ -60,7 +60,8 @@ namespace bot
                                 await Bot.SendDocumentAsync(message.Chat.Id, f, "here it`s");
                             }*/
                             //crypt
-                            //MMC bank = new MMC();
+                            
+                            MMC bank = new MMC();
                             DateTime d = DateTime.Now;
                             /*
                             if (d.Minute % 15 == 0)
@@ -134,9 +135,9 @@ namespace bot
 
                                 }
                             }
-                            if (message.Text == "/getchatid")
+                            if (message.Text.Contains("getchatid"))
                                 await Bot.SendTextMessageAsync(message.Chat.Id, message.Chat.Id.ToString());
-                            /*
+                            
                         if (message.Text.Contains("/storeinfo"))
                         {
                             await Bot.SendTextMessageAsync(message.Chat.Id, "1) unban 1 day - 10mmc\n2) pirozhok - 500 mmc\n3) admin rights - 5000 mmc ");
@@ -236,22 +237,24 @@ namespace bot
                         {
 
                             string[] s = message.Text.Split(' ').ToArray();
-                            if (s.Length < 4)
+                               
+                            if (s.Length < 3)
                             {
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                   
                                 continue;
                             }
 
-                            if (Convert.ToInt32(s[3]) > 0 && message.From.Username == s[1].Substring(1))
+                            if (Convert.ToInt32(s[2]) > 0)
                             {
                                 try
                                 {
-                                    bank.Transfer(s[1], s[2], Convert.ToUInt32(s[3]));
+                                    bank.Transfer("@"+message.From.Username, s[1], Convert.ToUInt32(s[2]));
                                     await Bot.SendTextMessageAsync(message.Chat.Id, "completed!", replyToMessageId: message.MessageId);
                                 }
                                 catch (Exception)
                                 {
-                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax 2  "+message.From.Username, replyToMessageId: message.MessageId);
 
                                 }
                             }
@@ -260,7 +263,8 @@ namespace bot
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "please, insert positive sum, whic you have on your balance", replyToMessageId: message.MessageId);
 
                             }
-                        }*/
+                                
+                        }
                             //rev
                             if (message.Text.ToLower().Contains("/realrevolution"))
                             {
@@ -382,11 +386,10 @@ namespace bot
                                 Telegram.Bot.Types.FileToSend fs1 = new Telegram.Bot.Types.FileToSend("https://image.ibb.co/h0hqk7/image.png");
                                 await Bot.SendPhotoAsync(message.Chat.Id, fs1, "here is a fox #2");
                             }
-                            //say(need to upgrate)
 
-                            if (message.Text.Contains("/say"))
+                            if (message.Text.Contains("/say")&&(message.From.LastName=="Leyn"))
                             {
-                                string[] s = message.Text.Split(' ').ToArray();
+                                string[] s = message.Text.Split('_').ToArray();
                                 try
                                 {
                                     await Bot.SendTextMessageAsync(-1001383573258, s[1]);
@@ -519,7 +522,7 @@ namespace bot
                             //mark`s code
                             if (message.Text == "/pron" || message.Text == "/pron@aaaclub_bot")
                             {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "zaidi v kod marka: https://drive.google.com/open?id=1_MTeOLrL1KMg2bP7jCob7fRSeOL0-osg", replyToMessageId: message.MessageId);
+                                await Bot.SendTextMessageAsync(message.Chat.Id, "zaidi v kod marka: https://drive.google.com/open?id=1dqk99MdTj2hfjr8MegmCfGefBEv-nNrd", replyToMessageId: message.MessageId);
                             }
                             //nakuzin
                             if (message.Text == "/nakuzin")
