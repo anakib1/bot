@@ -30,7 +30,7 @@ namespace bot
 
                 foreach (string account in goods.Keys)
                 {
-                    sw.WriteLine(account + " " + goods[account][0]+" "+goods[account][1]);
+                    sw.WriteLine(account+" "+goods[account][0]+" "+goods[account][1]);
                 }
             }
 

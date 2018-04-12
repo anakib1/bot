@@ -147,17 +147,23 @@ namespace bot
                         if(message.Text.Contains("/addgood"))
                         {
                            string[] s = message.Text.Split(' ').ToArray();
-                                if(store.HasGood("@"+message.From.Username))
+                               if(s.Length>3)
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax");
+
+                                if (store.HasGood("@"+message.From.Username)&&!bank.HasMMC("@"+message.From.Username))
                                 {
-                                    await Bot.SendTextMessageAsync(message.Chat.Id,"you already have an good");
-                                    continue;
+                                    await Bot.SendTextMessageAsync(message.Chat.Id,"you already have an good, u also need 10 mmc");
+                                    
                                 }
                                 try
                                 {
-                                    store.AddGood("@" + message.From.Username, s[1], s[2]);
-                                    await Bot.SendTextMessageAsync(message.Chat.Id, "completed! from u 10 mmc");
-                                    bank.Transfer("@" + message.From.Username, "@pauchok1love", 10);
-
+                                    if (Convert.ToInt32(bank.ViewBalance("@" + message.From.Username)) >= 10)
+                                    {
+                                        store.AddGood("@" + message.From.Username, s[1], s[2]);
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "completed! from u 10 mmc");
+                                        bank.Transfer("@" + message.From.Username, "@pauchok1love", 10);
+                                    }
+                                    
                                 }
                                 catch (Exception e1)
                                 {
@@ -165,7 +171,7 @@ namespace bot
                                 }
 
                         }
-                        if (message.Text == "/deletegood")
+                        if (message.Text == "/deletegood"||message.Text == "/deletegood@aaaclub_bot")
                         {
                                 try
                                 {
@@ -452,8 +458,23 @@ namespace bot
                                 Telegram.Bot.Types.FileToSend fs1 = new Telegram.Bot.Types.FileToSend("https://image.ibb.co/h0hqk7/image.png");
                                 await Bot.SendPhotoAsync(message.Chat.Id, fs1, "here is a fox #2");
                             }
+                            if (message.Text.Contains("/say2") && (message.From.LastName == "Leyn"))
+                            {
+                                string[] s = message.Text.Split('_').ToArray();
+                                try
+                                {
+                                    await Bot.SendTextMessageAsync(-1001208709548, s[1]);
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "completed!");
 
-                            if (message.Text.Contains("/say")&&(message.From.LastName=="Leyn"))
+                                }
+                                catch (Exception el)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "error" + el.Message);
+
+                                }
+
+                            }
+                            if (message.Text.Contains("/say")&&(message.From.LastName=="Leyn")&&!message.Text.Contains("/say2"))
                             {
                                 string[] s = message.Text.Split('_').ToArray();
                                 try
@@ -788,6 +809,13 @@ namespace bot
             }
 
 
+        }
+        public bool HasMMC(string name)
+        {
+            if (accounts.ContainsKey(name))
+                return true;
+            else
+                return false;
         }
         public void UpdateBalance(string @account, int sum)
         {
