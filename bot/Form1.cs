@@ -62,11 +62,13 @@ namespace bot
                             //crypt
                             
                             MMC bank = new MMC();
+                            Store store = new Store();
                             DateTime d = DateTime.Now;
                             /*
                             if (d.Minute % 15 == 0)
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "have you done your homework?");
                                 */
+                            
                             if (message.Text.Contains("/encrypt"))
                             {
                                 EnCrypt crypt = new EnCrypt();
@@ -140,8 +142,46 @@ namespace bot
                             
                         if (message.Text.Contains("/storeinfo"))
                         {
-                            await Bot.SendTextMessageAsync(message.Chat.Id, "1) unban 1 day - 10mmc\n2) pirozhok - 500 mmc\n3) admin rights - 5000 mmc ");
+                            await Bot.SendTextMessageAsync(message.Chat.Id, "1) unban 1 day - 10mmc\n2) pirozhok - 500 mmc\n3) admin rights - 5000 mmc "+store.ViewGoods());
                         }
+                        if(message.Text.Contains("/addgood"))
+                        {
+                           string[] s = message.Text.Split(' ').ToArray();
+                                if(store.HasGood("@"+message.From.Username))
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id,"you already have an good");
+                                    continue;
+                                }
+                                try
+                                {
+                                    store.AddGood("@" + message.From.Username, s[1], s[2]);
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "completed! from u 10 mmc");
+                                    bank.Transfer("@" + message.From.Username, "@pauchok1love", 10);
+
+                                }
+                                catch (Exception e1)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid synatx "+e1.Message);
+                                }
+
+                        }
+                        if (message.Text == "/deletegood")
+                        {
+                                try
+                                {
+                                    if (store.HasGood("@" + message.From.Username))
+                                    {
+                                        store.DeleteGood("@" + message.From.Username);
+                                        await Bot.SendTextMessageAsync(message.Chat.Id, "completed!");
+
+                                    }
+                                }
+                                catch(Exception e1)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "invalid synatx " + e1.Message);
+
+                                }
+                            }
                         if (message.Text.Contains("/buy"))
                         {
                             string[] s = message.Text.Split(' ').ToArray();
@@ -157,6 +197,7 @@ namespace bot
 
                             int sum = 1000000;
                             string action = String.Empty;
+                                if(Convert.ToInt32(s[1])<=3)
                             switch (s[1])
                             {
                                 case "1":
@@ -186,13 +227,38 @@ namespace bot
 
                                     }
                             }
+                                else
+                                {
+                                    if(store.N_of_keys()>=Convert.ToInt32(s[1])-3)
+                                    {
+                                        try
+                                        {
+                                            sum=store.Sum_of_b(Convert.ToInt32(s[1]) - 4);
+                                        }
+                                        catch(Exception e1)
+                                        {
+                                            await Bot.SendTextMessageAsync(message.Chat.Id, "invalid synatx " + e1.Message);
+
+                                        }
+
+                                    }
+                                }
                             if (Convert.ToInt32(bank.ViewBalance("@" + message.From.Username)) >= sum)
                             {
                                 try
                                 {
-                                    bank.UpdateBalance("@" + message.From.Username, -sum);
-                                    await Bot.SendTextMessageAsync(message.Chat.Id, action, replyToMessageId: message.MessageId);
-                                }
+                                        if (Convert.ToInt32(s[1]) <= 3)
+                                        {
+                                            bank.UpdateBalance("@" + message.From.Username, -sum);
+                                            await Bot.SendTextMessageAsync(message.Chat.Id, action, replyToMessageId: message.MessageId);
+                                        }
+                                        else
+                                        {
+                                            bank.Transfer("@" + message.From.Username, store.GetName(Convert.ToInt32(s[1]) - 4), Convert.ToUInt32(sum));
+                                            await Bot.SendTextMessageAsync(message.Chat.Id, store.GetGood(Convert.ToInt32(s[1]) - 4)+ " is bought", replyToMessageId: message.MessageId);
+
+                                        }
+                                    }
                                 catch (Exception)
                                 {
                                     await Bot.SendTextMessageAsync(message.Chat.Id, "invalid syntax", replyToMessageId: message.MessageId);
@@ -631,14 +697,38 @@ namespace bot
                                 //u = message.From;
                                 try
                                 {
-                                    await Bot.SetChatDescriptionAsync(message.Chat.Id, message.Chat.Description + "         " + message.From.FirstName + " " + message.From.LastName + " - pidrila");
-                                    await Bot.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+                                    
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, "САМ ТЫ ДАУН ", replyToMessageId: message.MessageId);
+                                    try
+                                    {
+                                        bank.UpdateBalance("@" + message.From, -1);
+                                    }
+                                    catch(Exception)
+                                    {
+                                        try
+                                        {
+                                            await Bot.SendTextMessageAsync(message.Chat.Id, "бан на день ", replyToMessageId: message.MessageId);
+                                            DateTime dateTime = DateTime.Now;
+                                            dateTime.AddDays(1.00d);
+
+                                            await Bot.RestrictChatMemberAsync(message.Chat.Id, message.From.Id, dateTime, false, false, false, false);
+                                        }
+                                        catch(Exception)
+                                        {
+                                            await Bot.SetChatDescriptionAsync(message.Chat.Id, message.Chat.Description + "         " + message.From.FirstName + " " + message.From.LastName + " - pidrila");
+                                        }
+                                    }
                                 }
                                 catch(Exception)
                                 {
 
                                 }
-                              
+                                finally
+                                {
+                                    await Bot.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+
+                                }
+
                             }/*
                             if(u.FirstName!=null)
                             if(message.From.FirstName.ToLower()==u.FirstName.ToLower())
